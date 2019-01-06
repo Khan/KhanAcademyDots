@@ -6,12 +6,18 @@
         })
     }
 
+    var btnOK = setInterval(initializePlugin, 250);
+
     function initializePlugin() {
 
         var $ = Zepto,
             $menu = $('#translation_container #action_copy_source').parent(),
             $changeFormatBtn = $('<button tabindex="-1" title="Copy Source & change number format (Ctrl + Alt + N)" class="btn btn-icon"><i class="static-icon-copy"></i></button>'),
             $translation = $('#translation');
+
+        if ($menu.length === 0) {
+           return;
+        }
 
         $changeFormatBtn.css('background', 'url("http://www.glidetraining.com/wp-content/uploads/2015/03/5commastyle.gif") 3px 7px no-repeat');
 
@@ -24,9 +30,7 @@
 
         $changeFormatBtn.on('click', copyAndReformatNumebrsInTranslation);
         key('alt+a', copyAndReformatNumebrsInTranslation);
+        clearInterval(btnOK);
     }
-
-    initializePlugin();
-
 
 })();
