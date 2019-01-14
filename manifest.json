@@ -2,7 +2,7 @@
   "name": "Khan Academy Dots",
   "description": "Change number format from dots to commas.",
   "author": "Szymon Bubak & Krzysztof Krystek & Robert Pala",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "permissions": [
     "activeTab"
   ],
