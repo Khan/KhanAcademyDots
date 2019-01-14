@@ -1,8 +1,8 @@
 {
   "name": "Khan Academy Dots",
   "description": "Change number format from dots to commas.",
-  "author": "Szymon Bubak & Krzysztof Krystek & Robert Pala",
-  "version": "2.0.4",
+  "author": "Szymon Bubak & Daniel Hollas & Krzysztof Krystek & Robert Pala",
+  "version": "2.0.5",
   "permissions": [
     "activeTab"
   ],
@@ -13,7 +13,7 @@
         "https://crowdin.com/translate/khanacademy/*"
       ],
       "js": [
-        "3rdPartyLibs/zepto.js",
+        "3rdPartyLibs/zepto.min.js",
         "3rdPartyLibs/keymaster.js",
         "app.js"
       ],
