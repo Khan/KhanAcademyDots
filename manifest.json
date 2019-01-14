@@ -21,9 +21,9 @@
     }
   ],
   "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
+    "16": "khan-logo-new-16.png",
+    "48": "khan-logo-new-48.png",
+    "128": "khan-logo-new-128.png"
   },
   "manifest_version": 2
 }
