@@ -1,11 +1,16 @@
 {
   "name": "Khan Academy Dots",
-  "description": "Change number format from dots to commas.",
+  "description": "Translate math notation in Khan Academy Crowdin strings.",
   "author": "Szymon Bubak & Daniel Hollas & Krzysztof Krystek & Robert Pala",
-  "version": "2.0.5",
+  "version": "3.0.0",
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
+   "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
   "content_scripts": [
     {
       "matches": [
@@ -15,8 +20,11 @@
       "js": [
         "3rdPartyLibs/zepto.min.js",
         "3rdPartyLibs/keymaster.js",
+        "3rdPartyLibs/jipt-hack.js",
+        "3rdPartyLibs/translation-assistant.js",
         "app.js"
       ],
+      "run_at": "document_idle",
       "all_frames": true
     }
   ],
