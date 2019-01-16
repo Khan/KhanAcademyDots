@@ -1,6 +1,5 @@
 (function () {
 
-    var ESCAPED = { "\n": "\\n", "\t": "\\t", "\r": "\\r", "\\": "\\\\" };
     var $ = Zepto;
     var copySourceElemSelector = '#translation_container #action_copy_source';
     var lang = 'dec-comma';
@@ -21,13 +20,18 @@
         }
     };
 
+    // This is where we actually translate math
+    // by calling helper function from Translation Assistant (TA)
     var translateMathWrapper = function (math, offset, fullString) {
-       // From Translation Assistant (TA)
        return translateMath(math, lang);
     }
 
+    // This is needed since TA deals only with unescaped strings,
+    // so we need to escape them afterwards. Equivalent code is part of 
+    // escapeTranslationIfSourceIsEscaped() in KA codebase JiptInterface
+    var ESCAPED = { "\n": "\\n", "\t": "\\t", "\r": "\\r", "\\": "\\\\" };
     var escapeCrowdinString = function (str) {
-        return str.replace(/\\|\n|\t|\r/g, function (sequence) {
+        return str.replace(/[\n\t\r\\]/g, function (sequence) {
            return ESCAPED[sequence];
         });
     }
@@ -44,13 +48,15 @@
 
         function copyAndTranslateMathInTranslation() {
             $('#action_copy_source').click();
-            var translatedString = $translation.val();
+            var source = $translation.val();
             // Unescape string to pass to TA (as happens in Khan Translation Editor)
-            translatedString = maybeUnescape(translatedString);
-            // translate math via TA
+            // Here we again use the actual code from KA codebase defined in jipt_hack.js
+            var translatedString = maybeUnescape(source);
+            // translate math via TA (MATH_REGEX is defined in TA as well)
             translatedString = translatedString.replace(MATH_REGEX, translateMathWrapper);
 
-            if(shouldUnescape($translation.val())) {
+            // Now we need to escape, but only if the source was unescaped before
+            if(shouldUnescape(source)) {
                 translatedString = escapeCrowdinString(translatedString);
             }
             $translation.val(translatedString);
@@ -61,5 +67,6 @@
         key('alt+a', copyAndTranslateMathInTranslation);
     };
 
+    //Crowdin window is generated dynamically, so we need to wait for the parent element to be built
     whenElemIsReady(copySourceElemSelector, initializePlugin);
 })();
