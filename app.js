@@ -3,7 +3,7 @@
     var ESCAPED = { "\n": "\\n", "\t": "\\t", "\r": "\\r", "\\": "\\\\" };
     var $ = Zepto;
     var copySourceElemSelector = '#translation_container #action_copy_source';
-    var lang = 'en';
+    var lang = 'dec-comma';
     // Users need to set the lang manually in plugin options!
     chrome.storage.sync.get(['locale'], function(result) {
          lang = result.locale;
