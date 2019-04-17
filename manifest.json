@@ -2,7 +2,7 @@
   "name": "Khan Academy Dots",
   "description": "Translate math notation in Khan Academy Crowdin strings.",
   "author": "Szymon Bubak & Daniel Hollas & Krzysztof Krystek & Robert Pala",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "permissions": [
     "activeTab",
     "storage"
@@ -32,6 +32,11 @@
     "16": "khan-logo-new-16.png",
     "48": "khan-logo-new-48.png",
     "128": "khan-logo-new-128.png"
+  },
+  "browser_specific_settings": {
+      "gecko": {
+         "id": "danekhollas@gmail.com"
+      }
   },
   "manifest_version": 2
 }
