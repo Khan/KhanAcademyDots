@@ -19,5 +19,5 @@ After installation, you'll see a new button next to the "copy source button" in 
 
 See it in action in [in this video](https://www.youtube.com/watch?time_continue=2&v=GCXZM7GEtVU).
 
-Technical note: The translation engine was extracted from [Translation Assistant](https://github.com/khan/translation-assistant) and is thus compatible with Smart Translations inside the [Translation Editor](available at khanacademy.org/translations).
+Technical note: The translation engine was extracted from [Translation Assistant](https://github.com/khan/translation-assistant) and is thus compatible with Smart Translations inside the [Translation Editor available at https://khanacademy.org/translations](https://khanacademy.org/translations).
 
