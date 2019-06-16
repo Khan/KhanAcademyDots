@@ -63,8 +63,6 @@
         }
 
         $changeFormatBtn.on('click', copyAndTranslateMathInTranslation);
-        // Not sure if this works
-        key('alt+a', copyAndTranslateMathInTranslation);
     };
 
     //Crowdin window is generated dynamically, so we need to wait for the parent element to be built

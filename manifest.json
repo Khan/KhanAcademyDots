@@ -19,7 +19,6 @@
       ],
       "js": [
         "3rdPartyLibs/zepto.min.js",
-        "3rdPartyLibs/keymaster.js",
         "3rdPartyLibs/jipt-hack.js",
         "3rdPartyLibs/translation-assistant.js",
         "app.js"
