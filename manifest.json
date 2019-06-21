@@ -19,8 +19,8 @@
       ],
       "js": [
         "3rdPartyLibs/zepto.min.js",
-        "3rdPartyLibs/jipt-hack.js",
-        "3rdPartyLibs/translation-assistant.js",
+        "KhanAcademyLibs/jipt-hack.js",
+        "KhanAcademyLibs/translation-assistant.js",
         "app.js"
       ],
       "run_at": "document_idle",
