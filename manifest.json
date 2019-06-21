@@ -33,9 +33,6 @@
     "128": "khan-logo-new-128.png"
   },
   "browser_specific_settings": {
-      "gecko": {
-         "id": "danekhollas@gmail.com"
-      }
-  },
+      "gecko": {"id": "danekhollas@gmail.com"}},
   "manifest_version": 2
 }

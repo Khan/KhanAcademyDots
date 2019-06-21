@@ -5,8 +5,19 @@
 # or Firefox
 # https://addons.mozilla.org/en-US/developers/addon/khan-academy-dots/edit
 
-# Don't forget to bump version in manifest.json before each official publish!
+if [[ -z $1 ]];then
+  echo "Please, provide browser name (firefox|chrome) as the parameter to this script"
+  exit 1
+fi
 
+if [[ $1 != "chrome" && $1 != "firefox" ]];then
+  echo "Unrecognized browser!"
+  echo "Please use \"firefox\" of \"chrome\""
+  exit 1
+fi
+
+browser=$1
+# Don't forget to bump version in manifest.json before each official publish!
 version=$(grep '"version"' manifest.json | awk -F'"' '{print $4}')
 REPO_NAME=KhanAcademyDots
 PACKAGE_NAME=${REPO_NAME}-${version}
@@ -33,6 +44,11 @@ if [[ $? -ne 0 ]];then
 fi
 
 rm -rf .git README.md pack_plugin.sh
+if [[ $browser = 'chrome' ]];then
+  # We need to exclude Firefox-specific manifest entries
+  grep -v -e gecko -e browser_specific_settings manifest.json > tmp
+  mv tmp manifest.json
+fi
 zip -r $PACKAGE_NAME.zip *
 mv $PACKAGE_NAME.zip ../
 cd ..
