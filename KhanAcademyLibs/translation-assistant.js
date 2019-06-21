@@ -364,8 +364,7 @@ var MATH_RULES_LOCALES = {
     THOUSAND_SEP_AS_THIN_SPACE: ['cs', 'fr', 'de', 'pt-pt', 'nb', 'bg', 'pl', 'ro', 'nl', 'az', 'sv', 'it', 'hu', 'uk'],
     THOUSAND_SEP_AS_DOT: ['pt', 'tr', 'da', 'sr', 'el'],
     NO_THOUSAND_SEP: ['ko', 'ps'],
-    //DH local modification: Added fake dec-comma language for backward compatibility with KA Dots plugin
-    DECIMAL_COMMA: ['dec-comma', 'cs', 'fr', 'de', 'pl', 'bg', 'nb', 'tr', 'da', 'sr', 'ro', 'nl', 'hu', 'az', 'it', 'pt', 'pt-pt', 'sv', 'el'],
+    DECIMAL_COMMA: ['cs', 'fr', 'de', 'pl', 'bg', 'nb', 'tr', 'da', 'sr', 'ro', 'nl', 'hu', 'az', 'it', 'pt', 'pt-pt', 'sv', 'el'],
     TIMES_AS_CDOT: ['cs', 'pl', 'de', 'nb', 'sr', 'ro', 'hu', 'sv', 'da'],
     DIV_AS_COLON: ['cs', 'de', 'bg', 'hu', 'uk', 'da', 'hy'],
     SIN_AS_SEN: ['it', 'pt', 'pt-pt'],

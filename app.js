@@ -2,7 +2,10 @@
 
     var $ = Zepto;
     var copySourceElemSelector = '#translation_container #action_copy_source';
+    // Amend translation Assistant with fake default locale so that we are
+    // backwards compatible with the old plugin
     var lang = 'dec-comma';
+    MATH_RULES_LOCALES.DECIMAL_COMMA.push(lang);
     // Users need to set the lang manually in plugin options!
     chrome.storage.sync.get(['locale'], function(result) {
          lang = result.locale;
