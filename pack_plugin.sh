@@ -43,7 +43,9 @@ if [[ $? -ne 0 ]];then
    exit 1
 fi
 
-rm -rf .git README.md pack_plugin.sh
+sed 's/module.exports/\/\/module.exports/' translation-assistant/lib/translation-assistant.js > KhanAcademyLibs/translation-assistant.js
+
+rm -rf .git/ README.md pack_plugin.sh translation-assistant/
 if [[ $browser = 'chrome' ]];then
   # We need to exclude Firefox-specific manifest entries
   grep -v -e gecko -e browser_specific_settings manifest.json > tmp
