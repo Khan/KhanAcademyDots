@@ -15,7 +15,6 @@
 
         if ($(selector).length > 0) {
             cb();
-
         } else {
             setTimeout(function () {
                 whenElemIsReady(selector, cb);
@@ -24,7 +23,7 @@
     };
 
     // This is where we actually translate math
-    // by calling helper function from Translation Assistant (TA)
+    // by calling a helper function from Translation Assistant (TA)
     var translateMathWrapper = function (math, offset, fullString) {
        return translateMath(math, lang);
     }
@@ -68,6 +67,6 @@
         $changeFormatBtn.on('click', copyAndTranslateMathInTranslation);
     };
 
-    //Crowdin window is generated dynamically, so we need to wait for the parent element to be built
+    //Crowdin window is generated dynamically so we need to wait for the parent element to be built
     whenElemIsReady(copySourceElemSelector, initializePlugin);
 })();

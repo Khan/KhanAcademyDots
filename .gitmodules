@@ -1,0 +1,3 @@
+[submodule "translation-assistant"]
+	path = translation-assistant
+	url = https://github.com/Khan/translation-assistant
