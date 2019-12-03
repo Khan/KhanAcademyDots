@@ -11,6 +11,9 @@
     "page": "options.html",
     "open_in_tab": false
   },
+  "web_accessible_resources": [
+    "5commastyle.gif"
+  ],
   "content_scripts": [
     {
       "matches": [

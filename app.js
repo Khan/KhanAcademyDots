@@ -44,7 +44,9 @@
             $changeFormatBtn = $('<button tabindex="-1" title="Copy Source & translate math notation" class="btn btn-icon"><i class="static-icon-copy"></i></button>'),
             $translation = $('#translation');
 
-        $changeFormatBtn.css('background', 'url("http://www.glidetraining.com/wp-content/uploads/2015/03/5commastyle.gif") 3px 7px no-repeat');
+        commaURL = chrome.runtime.getURL("5commastyle.gif");
+
+        $changeFormatBtn.css('background', `url("${commaURL}") 3px 7px no-repeat`);
 
         $menu.append($changeFormatBtn);
 
