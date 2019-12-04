@@ -21,3 +21,4 @@ See it in action in [in this video](https://www.youtube.com/watch?time_continue=
 
 Technical note: The translation is powered by [Translation Assistant](https://github.com/khan/translation-assistant) and is thus compatible with Smart Translations inside the [Translation Editor available at https://khanacademy.org/translations](https://khanacademy.org/translations).
 
+Developer info can be found [here](DEV.md)

@@ -1,5 +1,6 @@
 // Saves options to chrome.storage
-// DH: This code is basically copied from Chrome documentation example
+// This code is basically copied from Chrome documentation example
+// https://developer.chrome.com/extensions/options
 function save_options() {
   var locale = document.getElementById('locale').value;
   chrome.storage.sync.set({

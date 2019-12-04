@@ -20,7 +20,7 @@ browser=$1
 # Don't forget to bump version in manifest.json before each official publish!
 version=$(grep '"version"' manifest.json | awk -F'"' '{print $4}')
 REPO_NAME=KhanAcademyDots
-PACKAGE_NAME=${REPO_NAME}-${version}
+PACKAGE_NAME=${REPO_NAME}-${version}-${browser}
 
 cd ../
 
@@ -45,7 +45,7 @@ fi
 
 sed 's/module.exports/\/\/module.exports/' translation-assistant/lib/translation-assistant.js > KhanAcademyLibs/translation-assistant.js
 
-rm -rf .git/ README.md pack_plugin.sh translation-assistant/
+rm -rf .git/ *.md pack_plugin.sh translation-assistant/
 if [[ $browser = 'chrome' ]];then
   # We need to exclude Firefox-specific manifest entries
   grep -v -e gecko -e browser_specific_settings manifest.json > tmp
