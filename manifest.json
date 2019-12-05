@@ -7,13 +7,14 @@
     "activeTab",
     "storage"
   ],
-   "options_ui": {
-    "page": "options.html",
-    "open_in_tab": true
-  },
+  "options_page": "options.html",
   "web_accessible_resources": [
     "5commastyle.gif"
   ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
   "content_scripts": [
     {
       "matches": [

@@ -19,7 +19,7 @@ function save_options() {
 // stored in chrome.storage.
 function restore_options() {
   chrome.storage.sync.get({
-    locale: 'dec-comma',
+    locale: 'not-set',
   }, function(items) {
     document.getElementById('locale').value = items.locale;
   });
