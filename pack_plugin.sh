@@ -49,6 +49,8 @@ rm -rf .git/ *.md pack_plugin.sh translation-assistant/
 if [[ $browser = 'chrome' ]];then
   # We need to exclude Firefox-specific manifest entries
   grep -v -e gecko -e browser_specific_settings manifest.json > tmp
+  # More chrome specific things
+  sed -i 's/"persistent": true/"persistent": false/' tmp
   mv tmp manifest.json
 fi
 zip -r $PACKAGE_NAME.zip *
