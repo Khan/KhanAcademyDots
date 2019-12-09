@@ -51,6 +51,7 @@ if [[ $browser = 'chrome' ]];then
   grep -v -e gecko -e browser_specific_settings manifest.json > tmp
   # More chrome specific things
   sed -i 's/"persistent": true/"persistent": false/' tmp
+  sed -i 's/browser_style/chrome_style/' tmp
   mv tmp manifest.json
 fi
 zip -r $PACKAGE_NAME.zip *
