@@ -17,10 +17,12 @@ so after the initial clone, don't forget to run
 
 2. Create zip file, both for FireFox and Chrome
 
+```sh
     ./pack_plugin.sh chrome
     ./pack_plugin.sh firefox
+```
 
 3. Upload the zip file and publish.
 
-    - https://chrome.google.com/webstore/developer
+    - https://chrome.google.com/webstore/developer/dashboard
     - https://addons.mozilla.org/en-US/developers/addon/khan-academy-dots/edit

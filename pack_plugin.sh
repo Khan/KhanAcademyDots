@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Creates a zip archive that can be published in chrome:
-# https://chrome.google.com/webstore/developer
+# https://chrome.google.com/webstore/developer/dashboard
 # or Firefox
 # https://addons.mozilla.org/en-US/developers/addon/khan-academy-dots/edit
 
