@@ -19,6 +19,15 @@
     "open_in_tab": true,
     "browser_style": true
   },
+"commands": {
+  "translate-math": {
+    "suggested_key": {
+      "default": "Alt+C",
+      "mac": "Ctrl+C"
+    },
+    "description": "Click 'translate-math' button"
+  }
+ },
   "content_scripts": [
     {
       "matches": [

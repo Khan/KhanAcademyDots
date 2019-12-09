@@ -2,6 +2,17 @@
     var $ = Zepto;
     var copySourceElemSelector = '#translation_container #action_copy_source';
 
+    // Catch the keyboard shortcut specified in manifest
+    chrome.runtime.onMessage.addListener(function(message) {
+        switch (message.action) {
+            case "translate-math":
+                $('#translate_math').click();
+                break;
+            default:
+                break;
+        }
+    });
+
     // Users need to set the lang manually in plugin options!
     var openOptions = function () {
         chrome.runtime.sendMessage({"action": "openOptionsPage"});
@@ -46,12 +57,12 @@
     var initializePlugin = function() {
 
         $menu = $(copySourceElemSelector).parent();
-        $changeFormatBtn = $('<button tabindex="-1" title="Copy Source & translate math notation" class="btn btn-icon"><i class="static-icon-copy"></i></button>');
+        $translateMathBtn = $('<button id="translate_math" tabindex="-1" title="Copy Source & Translate Math" class="btn btn-icon"><i class="static-icon-copy"></i></button>');
         $translation = $('#translation');
 
         commaURL = chrome.runtime.getURL("5commastyle.gif");
-        $changeFormatBtn.css('background', `url("${commaURL}") 3px 7px no-repeat`);
-        $menu.append($changeFormatBtn);
+        $translateMathBtn.css('background', `url("${commaURL}") 3px 7px no-repeat`);
+        $menu.append($translateMathBtn);
 
         var copyAndTranslateMath = function(lang) {
             $('#action_copy_source').click();
@@ -80,7 +91,7 @@
             getLocale(copyAndTranslateMath);
         }
 
-        $changeFormatBtn.on('click', checkLocale);
+        $translateMathBtn.on('click', checkLocale);
     };
 
     //Crowdin window is generated dynamically so we need to wait for the parent element to be built
