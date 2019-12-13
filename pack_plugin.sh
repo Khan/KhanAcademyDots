@@ -52,7 +52,6 @@ if [[ $browser = 'chrome' ]];then
   # More chrome specific things
   sed -i 's/"persistent": true/"persistent": false/' tmp
   sed -i 's/browser_style/chrome_style/' tmp
-  sed -i 's/"default": "Alt+X"/"default": "Alt+C"/' tmp
   mv tmp manifest.json
 fi
 zip -r $PACKAGE_NAME.zip *

@@ -13,6 +13,17 @@
         }
     });
 
+    // Catch and block the Crowdin defualt Keyboard shortcut
+    // NOTE: We could actually just press our button here
+    // but using chrome.commmands in manigest allows
+    // users to customize the Keyboard shortcut
+    $(document).on("keydown", function(e) {
+        if (e.code === "KeyC" &&
+           (e.altKey || e.metaKey) && !e.ctrlKey && !e.shiftKey) {
+            e.stopImmediatePropagation();
+        }
+    });
+
     // Users need to set the lang manually in plugin options!
     var openOptions = function () {
         chrome.runtime.sendMessage({"action": "openOptionsPage"});
