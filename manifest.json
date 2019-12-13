@@ -23,7 +23,7 @@
   "translate-math": {
     "suggested_key": {
       "default": "Alt+X",
-      "mac": "Ctrl+C"
+      "mac": "Command+C"
     },
     "description": "Click 'translate-math' button"
   }
