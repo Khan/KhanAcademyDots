@@ -67,15 +67,22 @@
 
     var initializePlugin = function() {
 
-        $menu = $(copySourceElemSelector).parent();
-        $translateMathBtn = $('<button id="translate_math" tabindex="-1" title="Copy Source & Translate Math" class="btn btn-icon"><i class="static-icon-copy"></i></button>');
-        $translation = $('#translation');
-
+        // Creating new button
+        $translateMathBtn = $('<button id="translate_math" tabindex="-1" title="Copy Source & Translate Math (Alt+C)" class="btn btn-icon"><i class="static-icon-copy"></i></button>');
         commaURL = chrome.runtime.getURL("5commastyle.gif");
         $translateMathBtn.css('background', `url("${commaURL}") 3px 7px no-repeat`);
+
+        $copySourceBtn = $(copySourceElemSelector);
+        $menu = $copySourceBtn.parent();
         $menu.append($translateMathBtn);
 
+        // Default keyboard now clicks our new button instead
+        // so change the title of the original button
+        $copySourceBtn.attr("title", "Copy Source");
+
         var copyAndTranslateMath = function(lang) {
+            $translation = $('#translation');
+            // Click the original button
             $('#action_copy_source').click();
 
             // This is where we actually translate math
