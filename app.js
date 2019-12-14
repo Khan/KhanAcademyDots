@@ -1,6 +1,7 @@
 (function () {
     var $ = Zepto;
     var copySourceElemSelector = '#translation_container #action_copy_source';
+    var isMac = (/mac/i).test(navigator.platform);
 
     // Catch the keyboard shortcut specified in manifest
     chrome.runtime.onMessage.addListener(function(message) {
@@ -13,7 +14,7 @@
         }
     });
 
-    // Catch and block the Crowdin defualt Keyboard shortcut
+    // Catch and block the Crowdin default keyboard shortcut
     // NOTE: We could actually just press our button here
     // but using chrome.commmands in manigest allows
     // users to customize the Keyboard shortcut
@@ -67,8 +68,15 @@
 
     var initializePlugin = function() {
 
-        // Creating new button
-        $translateMathBtn = $('<button id="translate_math" tabindex="-1" title="Copy Source & Translate Math (Alt+C)" class="btn btn-icon"><i class="static-icon-copy"></i></button>');
+        // Create a new button
+        $translateMathBtn = $('<button id="translate_math" tabindex="-1" class="btn btn-icon"><i class="static-icon-copy"></i></button>');
+        var shortcut;
+        if(isMac)
+          shortcut = " (Cmd+C)" 
+        else
+          shortcut = " (Alt+C)"
+        title = "Copy Source & Translate Math " + shortcut
+        $translateMathBtn.attr("title", title)
         commaURL = chrome.runtime.getURL("5commastyle.gif");
         $translateMathBtn.css('background', `url("${commaURL}") 3px 7px no-repeat`);
 
