@@ -1,6 +1,29 @@
 (function () {
     var $ = Zepto;
     var copySourceElemSelector = '#translation_container #action_copy_source';
+    var isMac = (/mac/i).test(navigator.platform);
+
+    // Catch the keyboard shortcut specified in manifest
+    chrome.runtime.onMessage.addListener(function(message) {
+        switch (message.action) {
+            case "translate-math":
+                $('#translate_math').click();
+                break;
+            default:
+                break;
+        }
+    });
+
+    // Catch and block the Crowdin default keyboard shortcut
+    // NOTE: We could actually just press our button here
+    // but using chrome.commmands in manigest allows
+    // users to customize the Keyboard shortcut
+    $(document).on("keydown", function(e) {
+        if (e.code === "KeyC" &&
+           (e.altKey || e.metaKey) && !e.ctrlKey && !e.shiftKey) {
+            e.stopImmediatePropagation();
+        }
+    });
 
     // Users need to set the lang manually in plugin options!
     var openOptions = function () {
@@ -45,15 +68,29 @@
 
     var initializePlugin = function() {
 
-        $menu = $(copySourceElemSelector).parent();
-        $changeFormatBtn = $('<button tabindex="-1" title="Copy Source & translate math notation" class="btn btn-icon"><i class="static-icon-copy"></i></button>');
-        $translation = $('#translation');
-
+        // Create a new button
+        $translateMathBtn = $('<button id="translate_math" tabindex="-1" class="btn btn-icon"><i class="static-icon-copy"></i></button>');
+        var shortcut;
+        if(isMac)
+          shortcut = " (Cmd+C)" 
+        else
+          shortcut = " (Alt+C)"
+        title = "Copy Source & Translate Math " + shortcut
+        $translateMathBtn.attr("title", title)
         commaURL = chrome.runtime.getURL("5commastyle.gif");
-        $changeFormatBtn.css('background', `url("${commaURL}") 3px 7px no-repeat`);
-        $menu.append($changeFormatBtn);
+        $translateMathBtn.css('background', `url("${commaURL}") 3px 7px no-repeat`);
+
+        $copySourceBtn = $(copySourceElemSelector);
+        $menu = $copySourceBtn.parent();
+        $menu.append($translateMathBtn);
+
+        // Default keyboard now clicks our new button instead
+        // so change the title of the original button
+        $copySourceBtn.attr("title", "Copy Source");
 
         var copyAndTranslateMath = function(lang) {
+            $translation = $('#translation');
+            // Click the original button
             $('#action_copy_source').click();
 
             // This is where we actually translate math
@@ -80,7 +117,7 @@
             getLocale(copyAndTranslateMath);
         }
 
-        $changeFormatBtn.on('click', checkLocale);
+        $translateMathBtn.on('click', checkLocale);
     };
 
     //Crowdin window is generated dynamically so we need to wait for the parent element to be built
