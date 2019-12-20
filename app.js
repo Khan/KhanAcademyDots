@@ -19,8 +19,11 @@
     // but using chrome.commmands in manigest allows
     // users to customize the Keyboard shortcut
     $(document).on("keydown", function(e) {
-        if (e.code === "KeyC" &&
-           (e.altKey || e.metaKey) && !e.ctrlKey && !e.shiftKey) {
+        // Alt+C for Linux and Win
+        // Ctrl+C for Mac
+        if (e.code === "KeyC" && (
+          (!isMac && e.altKey && !e.ctrlKey && !e.shiftKey) ||
+           (isMac && e.ctrlKey && !e.altKey && !e.shiftKey) )) {
             e.stopImmediatePropagation();
         }
     });
