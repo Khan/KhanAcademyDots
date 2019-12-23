@@ -75,7 +75,7 @@
         $translateMathBtn = $('<button id="translate_math" tabindex="-1" class="btn btn-icon"><i class="static-icon-copy"></i></button>');
         var shortcut;
         if(isMac)
-          shortcut = " (Cmd+C)" 
+          shortcut = " (Ctrl+C)"
         else
           shortcut = " (Alt+C)"
         title = "Copy Source & Translate Math " + shortcut
