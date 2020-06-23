@@ -43,7 +43,11 @@ if [[ $? -ne 0 ]];then
    exit 1
 fi
 
-sed 's/module.exports/\/\/module.exports/' translation-assistant/lib/translation-assistant.js > KhanAcademyLibs/translation-assistant.js
+#sed 's/module.exports/\/\/module.exports/' translation-assistant/lib/math-translator.js > KhanAcademyLibs/math-translator.js
+# Get rid of module.exports, which is not supported in browser plugins
+nlines=$(grep -n 'module.exports' translation-assistant/lib/math-translator.js | awk -F":" '{print $1;end}')
+let nlines--
+head -n $nlines translation-assistant/lib/math-translator.js > KhanAcademyLibs/math-translator.js
 
 rm -rf .git/ *.md pack_plugin.sh translation-assistant/
 if [[ $browser = 'chrome' ]];then

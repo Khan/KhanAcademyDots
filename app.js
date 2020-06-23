@@ -50,7 +50,6 @@
     };
 
     var whenElemIsReady = function (selector, cb) {
-
         if ($(selector).length > 0) {
             cb();
         } else {
@@ -88,38 +87,42 @@
 
         // The original button
         $copySourceBtn = $(copySourceElemSelector);
+        // Translation area
+        $translation = $('#translation');
+
+        // Append our button
         $menu = $copySourceBtn.parent();
         $menu.append($translateMathBtn);
 
-        // Default keyboard now clicks our new button instead
-        // so change the title of the original button
+        // Default keyboard shortcut now clicks our new button instead
+        // so change the title of the original button (remove shortcut)
         $copySourceBtn.attr("title", "Copy Source");
 
         var copyAndTranslateMath = function(lang) {
-            // TODO: Move this up
-            $translation = $('#translation');
             // Click the original button
-            // TODO: use $copySourceBtn
-            $('#action_copy_source').click();
+            $copySourceBtn.click();
 
             // This is where we actually translate math
-            // by calling a helper function from Translation Assistant (TA)
+            // by calling a helper function from Translation Assistant
             function translateMathWrapper(math, offset, fullString) {
-                return translateMath(math, lang);
+                const template = '';
+                return translateMath(math, template, lang);
             }
 
-            var source = $translation.val();
+            var sourceString = $translation.val();
             // Unescape string to pass to TA (as happens in Khan Translation Editor)
             // Here we again use the actual code from KA codebase defined in jipt_hack.js
-            var translatedString = maybeUnescape(source);
-            // translate math via TA (MATH_REGEX is defined in TA as well)
-            translatedString = translatedString.replace(MATH_REGEX, translateMathWrapper);
+            var translatedString = maybeUnescape(sourceString);
+
+            // Copied over from translation-assistant.js
+            const math_regex = /\$(\\\$|[^\$])+\$/g;
+            translatedString = translatedString.replace(math_regex, translateMathWrapper);
 
             // Now we need to escape, but only if the source was unescaped before
-            if(shouldUnescape(source)) {
+            if(shouldUnescape(sourceString)) {
                 translatedString = escapeCrowdinString(translatedString);
             }
-            $translation.val(translatedString).trigger("input");
+            $translation.val(translatedString).trigger('input');
         }
 
         var checkLocale = function() {
@@ -129,6 +132,7 @@
         $translateMathBtn.on('click', checkLocale);
     };
 
-    //Crowdin window is generated dynamically so we need to wait for the parent element to be built
+    // Crowdin window is generated dynamically
+    // so we need to wait for the parent element to be built
     whenElemIsReady(copySourceElemSelector, initializePlugin);
 })();
