@@ -18,6 +18,8 @@
     // NOTE: We could actually just press our button here
     // but using chrome.commmands in manigest allows
     // users to customize the Keyboard shortcut
+    // NOTE2: This will obviously not work if user customized
+    // their Crowdin shortcut for "Copy Source"
     $(document).on("keydown", function(e) {
         // Alt+C for Linux and Win
         // Ctrl+C for Mac
@@ -72,6 +74,7 @@
     var initializePlugin = function() {
 
         // Create a new button
+        // TODO: Move this code to a separate function createButton(parenElem);
         $translateMathBtn = $('<button id="translate_math" tabindex="-1" class="btn btn-icon"><i class="static-icon-copy"></i></button>');
         var shortcut;
         if(isMac)
@@ -83,6 +86,7 @@
         commaURL = chrome.runtime.getURL("5commastyle.gif");
         $translateMathBtn.css('background', `url("${commaURL}") 3px 7px no-repeat`);
 
+        // The original button
         $copySourceBtn = $(copySourceElemSelector);
         $menu = $copySourceBtn.parent();
         $menu.append($translateMathBtn);
@@ -92,8 +96,10 @@
         $copySourceBtn.attr("title", "Copy Source");
 
         var copyAndTranslateMath = function(lang) {
+            // TODO: Move this up
             $translation = $('#translation');
             // Click the original button
+            // TODO: use $copySourceBtn
             $('#action_copy_source').click();
 
             // This is where we actually translate math
@@ -113,7 +119,7 @@
             if(shouldUnescape(source)) {
                 translatedString = escapeCrowdinString(translatedString);
             }
-            $translation.val(translatedString);
+            $translation.val(translatedString).trigger("input");
         }
 
         var checkLocale = function() {
