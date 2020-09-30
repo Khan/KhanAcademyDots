@@ -1,28 +1,40 @@
-// Saves options to chrome.storage
-// This code is basically copied from Chrome documentation example
-// https://developer.chrome.com/extensions/options
-function save_options() {
-  var locale = document.getElementById('locale').value;
-  chrome.storage.sync.set({
-    locale: locale,
-  }, function() {
-    // Update status to let user know options were saved.
-    var status = document.getElementById('status');
-    status.textContent = 'Options saved.';
-    setTimeout(function() {
-      status.textContent = '';
-    }, 1500);
-  });
+/*global chrome, document*/
+
+/**
+ * Saves options to chrome.storage
+ *
+ * This code is mostly copy-pasta from Chrome documentation example
+ * https://developer.chrome.com/extensions/options
+ *
+ * @returns {undefined}
+ */
+function saveOptions() {
+    const locale = document.getElementById('locale').value;
+    chrome.storage.sync.set({
+        locale: locale,
+    }, function() {
+        // Update status to let user know options were saved.
+        const status = document.getElementById('status');
+        status.textContent = 'Options saved.';
+        setTimeout(function() {
+            status.textContent = '';
+        }, 1500);
+    });
 }
 
-// Restores select box and checkbox state using the preferences
-// stored in chrome.storage.
-function restore_options() {
-  chrome.storage.sync.get({
-    locale: 'not-set',
-  }, function(items) {
-    document.getElementById('locale').value = items.locale;
-  });
+/**
+ * Restores select box and checkbox state on options page
+ * using the preferences stored in chrome.storage.
+ *
+ * @returns {undefined}
+ */
+function restoreOptions() {
+    chrome.storage.sync.get({
+        locale: 'not-set',
+    }, function(items) {
+        document.getElementById('locale').value = items.locale;
+    });
 }
-document.addEventListener('DOMContentLoaded', restore_options);
-document.getElementById('save').addEventListener('click', save_options);
+
+document.addEventListener('DOMContentLoaded', restoreOptions);
+document.getElementById('save').addEventListener('click', saveOptions);
