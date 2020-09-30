@@ -1,0 +1,26 @@
+{
+  "name": "khan-academy-dots",
+  "description": "Translate math notation in Khan Academy Crowdin strings.",
+  "author": "Daniel Hollas & Szymon Bubak & Krzysztof Krystek & Robert Pala",
+  "version": "3.3.0",
+  "main": "app.js",
+  "scripts": {
+    "lint": "eslint *.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com:szmeku/KhanAcademyDots"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/szmeku/KhanAcademyDots/issues"
+  },
+  "homepage": "https://github.com/szmeku/KhanAcademyDots",
+  "devDependencies": {
+    "eslint": "^7.10.0",
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit": [
+    "lint"
+  ]
+}
