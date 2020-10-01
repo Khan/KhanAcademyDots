@@ -49,7 +49,7 @@ nlines=$(grep -n 'module.exports' translation-assistant/lib/math-translator.js |
 let nlines--
 head -n $nlines translation-assistant/lib/math-translator.js > KhanAcademyLibs/math-translator.js
 
-rm -rf .git/ *.md pack_plugin.sh translation-assistant/
+rm -rf node_modules/ package.json package-lock.json .eslintrc .git/ *.md pack_plugin.sh translation-assistant/
 if [[ $browser = 'chrome' ]];then
   # We need to exclude Firefox-specific manifest entries
   grep -v -e gecko -e browser_specific_settings manifest.json > tmp

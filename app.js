@@ -3,10 +3,13 @@
 
 (function() {
     const $ = Zepto;
+    // Selector for the original Crowdin Copy Source button
     const copySourceElemSelector = '#translation_container #action_copy_source';
+    // Mac users have different keyboard shortcut
     const isMac = (/mac/i).test(navigator.platform);
 
     // Catch the keyboard shortcut specified in manifest
+    // and click the plugin button
     chrome.runtime.onMessage.addListener(function(message) {
         switch (message.action) {
         case 'translate-math':
@@ -17,12 +20,16 @@
         }
     });
 
-    // Catch and block the Crowdin default keyboard shortcut
-    // NOTE: We could actually just press our button here
-    // but using chrome.commmands in manigest allows
-    // users to customize the Keyboard shortcut
-    // NOTE2: This will obviously not work if user customized
-    // their Crowdin shortcut for "Copy Source"
+    /**
+     * Catch and block the Crowdin default keyboard shortcut
+     *
+     * We could actually just press our button here
+     * but using chrome.commmands in manifest allows
+     * users to customize the Keyboard shortcut
+     *
+     * This will obviously not work if user customized
+     * their Crowdin shortcut for "Copy Source"
+     */
     $(document).on('keydown', function(e) {
         // Alt+C for Linux and Win
         // Ctrl+C for Mac
@@ -33,24 +40,36 @@
         }
     });
 
-    // Users need to set the lang manually in plugin options!
-    // Here we send a message to background.js to open Options
+    /**
+     * Users need to set the lang manually in plugin options!
+     * Here we send a message to background.js to open Options page
+     *
+     * @returns {undefined}
+     */
     const openOptions = function() {
         chrome.runtime.sendMessage({'action': 'openOptionsPage'});
     };
 
+    /**
+     * Get locale from user options and execute callback,
+     * or open options if locale is not set.
+     *
+     * @param {function} cb callback to be called with locale as parameter
+     * @returns {undefined}
+     */
     const getLocale = function(cb) {
-
         /**
          * Auxiliary function, calling callback
-         * once we have the locale from options
-         * or open options if language is not set.
+         * once we have the locale from chrome.storage API
+         * or open options if locale is not set.
          *
          * @param {object} result from options page
          * @return {undefined}
          */
         function onGet(result) {
             const lang = result.locale;
+            // 'dec-comma' is a legacy option that we do not
+            // support anymore
             if (lang && lang != 'dec-comma') {
                 cb(lang);
             } else {
@@ -72,30 +91,33 @@
         });
     };
 
-    const initializePlugin = function() {
-
-        // Create a new button
-        // TODO: Move this code to a separate function createButton(parenElem);
+    const createPluginButton = function() {
         const $translateMathBtn =
             $('<button id="translate_math" tabindex="-1" class="btn btn-icon">'
             + '<i class="static-icon-copy"></i></button>');
+
         let shortcut;
         if (isMac)
-            shortcut = ' (Ctrl+C)';
+            shortcut = '(Ctrl+C)';
         else
-            shortcut = ' (Alt+C)';
+            shortcut = '(Alt+C)';
         const title = `Copy Source & Translate Math ${shortcut}`;
         $translateMathBtn.attr('title', title);
+
         const commaURL = chrome.runtime.getURL('5commastyle.gif');
         $translateMathBtn.css('background',
             `url("${commaURL}") 3px 7px no-repeat`);
 
-        // The original button
-        const $copySourceBtn = $(copySourceElemSelector);
-        // Translation area
-        const $translation = $('#translation');
+        return $translateMathBtn;
+    };
 
-        // Append our button
+    const initializePlugin = function() {
+
+        // Create a new button
+        const $translateMathBtn = createPluginButton();
+
+        // Append our button next to the existing buttons
+        const $copySourceBtn = $(copySourceElemSelector);
         const $menu = $copySourceBtn.parent();
         $menu.append($translateMathBtn);
 
@@ -104,8 +126,6 @@
         $copySourceBtn.attr('title', 'Copy Source');
 
         const copyAndTranslateMath = function(lang) {
-            // Click the original button
-            $copySourceBtn.click();
 
             /**
              * This is where we actually translate math
@@ -123,10 +143,18 @@
                 return translateMath(math, template, lang);
             }
 
+            // Click the original button
+            // TODO: Are we sure the click action happens before
+            // the rest of the code?
+            $copySourceBtn.click();
+
+            // Extract string from the translation textarea
+            const $translation = $('#translation');
             const sourceString = $translation.val();
+
             // Unescape string to pass to Translation Assistant
-            // (as happens in the Khan Translation Editor)
-            // Here we again use the actual code from KA codebase
+            // (the same happens in the Khan Translation Editor)
+            // Here we use the actual code from KA codebase
             // defined in jipt_hack.js
             let translatedString = maybeUnescape(sourceString);
 
