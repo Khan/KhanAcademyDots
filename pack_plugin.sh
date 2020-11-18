@@ -5,24 +5,26 @@
 # or Firefox
 # https://addons.mozilla.org/en-US/developers/addon/khan-academy-dots/edit
 
-if [[ -z $1 ]];then
-  echo "Please, provide browser name (firefox|chrome) as the parameter to this script"
+set -eou pipefail
+
+browser=${1-}
+if [[ -z $browser ]];then
+  echo "USAGE: ./pack_plugin.sh <firefox|chrome>"
   exit 1
 fi
 
-if [[ $1 != "chrome" && $1 != "firefox" ]];then
+if [[ $browser != "chrome" && $browser != "firefox" ]];then
   echo "Unrecognized browser!"
   echo "Please use \"firefox\" of \"chrome\""
   exit 1
 fi
 
-browser=$1
 # Don't forget to bump version in manifest.json before each official publish!
 version=$(grep '"version"' manifest.json | awk -F'"' '{print $4}')
 REPO_NAME=KhanAcademyDots
 PACKAGE_NAME=${REPO_NAME}-${version}-${browser}
 
-cd ../
+cd ../ || exit 1
 
 rm -rf $PACKAGE_NAME.zip
 
@@ -35,19 +37,24 @@ if [[ ! -d $REPO_NAME ]];then
    exit 1
 fi
 
+if [[ -d $PACKAGE_NAME ]];then
+  rm -rf $PACKAGE_NAME
+fi
+
 cp -r $REPO_NAME $PACKAGE_NAME
 
-cd $PACKAGE_NAME
+cd $PACKAGE_NAME || exit 1
 if [[ $? -ne 0 ]];then
    echo "ERROR: Could not enter dir ../$PACKAGE_NAME"
    exit 1
 fi
 
-#sed 's/module.exports/\/\/module.exports/' translation-assistant/lib/math-translator.js > KhanAcademyLibs/math-translator.js
-# Get rid of module.exports, which is not supported in browser plugins
+# Get rid of module.exports and babel requires,
+# which are not supported in browser plugins
 nlines=$(grep -n 'module.exports' translation-assistant/lib/math-translator.js | awk -F":" '{print $1;end}')
 let nlines--
-head -n $nlines translation-assistant/lib/math-translator.js > KhanAcademyLibs/math-translator.js
+head -n $nlines translation-assistant/lib/math-translator.js |\
+ egrep -v 'require(.+)' > KhanAcademyLibs/math-translator.js
 
 rm -rf node_modules/ package.json package-lock.json .eslintrc .git/ *.md pack_plugin.sh translation-assistant/
 if [[ $browser = 'chrome' ]];then
@@ -60,6 +67,6 @@ if [[ $browser = 'chrome' ]];then
 fi
 zip -r $PACKAGE_NAME.zip *
 mv $PACKAGE_NAME.zip ../
-cd ..
+cd .. || exit 1
 
 rm -rf $PACKAGE_NAME
