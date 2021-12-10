@@ -9,7 +9,7 @@ so after the initial clone, don't forget to run
 ### Updating Translation Assistant to latest master
 
     git submodule update --remote
-    git commit translations-assistant
+    git commit translation-assistant
 
 ### Publishing a new version of the plugin
 
