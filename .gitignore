@@ -1,3 +1,4 @@
 package-lock.json
 node_modules
 KhanAcademyLibs/math-translator.js
+*.zip
